@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="sqlContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!--base mapper-->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.shhxzq.fin.simulator.mapper.MyMapper"/>
+        </plugin>
+
+        <!--serialize plugin-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <!--lombok plugin-->
+        <plugin type="com.shhxzq.fin.simulator.common.util.LombokPlugin"/>
+
+        <!--jdbc driver-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/simulator"
+                        userId="root" password="123456"/>
+
+        <!--Xxx.java-->
+        <javaModelGenerator targetPackage="com.shhxzq.fin.simulator.model.vo"
+                            targetProject="../sim-model/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--XxxMapper.xml-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--XxxMapper.java-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.shhxzq.fin.simulator.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--table name-->
+        <table tableName="table_name">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

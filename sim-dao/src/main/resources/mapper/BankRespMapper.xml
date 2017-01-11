@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shhxzq.fin.simulator.mapper.BankRespMapper">
+    <resultMap id="BaseResultMap" type="com.shhxzq.fin.simulator.model.vo.BankResp">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="bnk_co" property="bnkCo" jdbcType="VARCHAR"/>
+        <result column="bnk_nm" property="bnkNm" jdbcType="VARCHAR"/>
+        <result column="resp_co" property="respCo" jdbcType="VARCHAR"/>
+        <result column="resp_msg" property="respMsg" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insertBankResps">
+        INSERT INTO bank_resp
+        (bnk_co, bnk_nm, resp_co, resp_msg)
+        VALUES
+        <foreach collection="resps" item="resp" separator=",">
+            (#{bnkCo}, #{bnkNm}, #{resp.key}, #{resp.value})
+        </foreach>
+    </insert>
+</mapper>

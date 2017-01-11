@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- Activates annotation-based bean configuration -->
+    <context:annotation-config/>
+
+    <!-- Scans for application @Components to deploy -->
+    <context:component-scan base-package="com.shhxzq.fin.simulator"/>
+
+    <!-- 使用JDBC事务 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 读取属性文件，否则 java 类无法直接读取属性 -->
+    <context:property-placeholder location="classpath:app.properties"/>
+
+    <!-- AOP配置事物 -->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+
+            <tx:method name="search*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="find*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="get*" read-only="true" propagation="REQUIRED"/>
+            <tx:method name="*" read-only="true" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <bean id="logAop" class="com.shhxzq.fin.simulator.biz.aop.LogAop"></bean>
+
+    <bean id="cacheAop" class="com.shhxzq.fin.simulator.biz.aop.CacheAop">
+        <property name="redisService" ref="redisService"></property>
+    </bean>
+
+    <!-- 配置AOP切面 -->
+    <aop:config>
+        <!--切点，用于事务-->
+        <aop:pointcut id="transactionPointcut"
+                      expression="execution(* com.shhxzq.fin.simulator.biz.service.impl..*.*(..))"/>
+        <!--切点，用于日志-->
+        <aop:pointcut id="logTarget" expression="execution(* com.shhxzq.fin.simulator.biz..*.*(..))"/>
+        <!--切点，用于缓存-->
+        <aop:pointcut id="cacheTarget" expression="execution(* com.shhxzq.fin.simulator.biz..*.*(..))"/>
+
+        <!--事物切面-->
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" order="3"/>
+        <!--日志切面-->
+        <aop:aspect id="logAspect" ref="logAop" order="2">
+            <aop:around method="around" pointcut-ref="logTarget"/>
+        </aop:aspect>
+        <!--缓存切面-->
+        <!--<aop:aspect id="cacheAspect" ref="cacheAop" order="4">-->
+        <!--<aop:around method="around" pointcut-ref="cacheTarget"/>-->
+        <!--</aop:aspect>-->
+    </aop:config>
+
+    <!-- 任务调度器 -->
+    <task:scheduler id="scheduler" pool-size="10"/>
+
+    <!-- 任务执行器 -->
+    <task:executor id="executor" pool-size="10"/>
+
+    <!--开启注解调度支持 @Async @Scheduled-->
+    <task:annotation-driven executor="executor" scheduler="scheduler" proxy-target-class="true"/>
+
+
+</beans>

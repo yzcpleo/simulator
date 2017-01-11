@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shhxzq.fin.simulator.mapper.BankCommandMapper">
+    <resultMap id="BaseResultMap" type="com.shhxzq.fin.simulator.model.vo.BankCommand">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="bnk_co" property="bnkCo" jdbcType="VARCHAR"/>
+        <result column="bnk_nm" property="bnkNm" jdbcType="VARCHAR"/>
+        <result column="mer_serial_no" property="merSerialNo" jdbcType="VARCHAR"/>
+        <result column="bnk_serial_no" property="bnkSerialNo" jdbcType="VARCHAR"/>
+        <result column="tran_co" property="tranCo" jdbcType="VARCHAR"/>
+        <result column="tran_nm" property="tranNm" jdbcType="VARCHAR"/>
+        <result column="sndr_acco_no" property="sndrAccoNo" jdbcType="VARCHAR"/>
+        <result column="amount" property="amount" jdbcType="VARCHAR"/>
+        <result column="rcvr_acco_no" property="rcvrAccoNo" jdbcType="VARCHAR"/>
+        <result column="work_day" property="workDay" jdbcType="VARCHAR"/>
+        <result column="protocol_no" property="protocolNo" jdbcType="VARCHAR"/>
+        <result column="rcvr_resv1" property="rcvrResv1" jdbcType="VARCHAR"/>
+        <result column="rcvr_resv2" property="rcvrResv2" jdbcType="VARCHAR"/>
+        <result column="rcvr_resv3" property="rcvrResv3" jdbcType="VARCHAR"/>
+        <result column="rcvr_resv4" property="rcvrResv4" jdbcType="VARCHAR"/>
+        <result column="resp_co" property="respCo" jdbcType="VARCHAR"/>
+        <result column="resp_msg" property="respMsg" jdbcType="VARCHAR"/>
+        <result column="tran_st" property="tranSt" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+</mapper>

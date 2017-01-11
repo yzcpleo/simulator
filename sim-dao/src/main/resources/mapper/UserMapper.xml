@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shhxzq.fin.simulator.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.shhxzq.fin.simulator.model.vo.User">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="fullname" property="fullname" jdbcType="VARCHAR"/>
+        <result column="small_avatar" property="smallAvatar" jdbcType="VARCHAR"/>
+        <result column="medium_avatar" property="mediumAvatar" jdbcType="VARCHAR"/>
+        <result column="large_avatar" property="largeAvatar" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insertUserRoles">
+        INSERT INTO user_role (username, role_code)
+        VALUES
+        <foreach collection="roleCodes" item="roleCode" separator=",">
+            (#{username}, #{roleCode})
+        </foreach>
+    </insert>
+</mapper>

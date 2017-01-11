@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <group>
+        <!-- redis -->
+        <property name="sim.redis.maxTotal" description="redis最大连接数" defaultValue="1000"/>
+        <property name="sim.redis.minIdle" description="redis最小等待数" defaultValue="50"/>
+        <property name="sim.redis.maxIdle" description="redis最大等待数" defaultValue="100"/>
+        <property name="sim.redis.testOnBorrow" description="redis测试支持" defaultValue="true"/>
+        <property name="sim.redis.host" description="redis主机ip" defaultValue="127.0.0.1"/>
+        <property name="sim.redis.port" description="redis主机端口" defaultValue="6379"/>
+        <property name="sim.redis.password" description="redis密码" defaultValue="123456"/>
+
+        <!--jdbc-->
+        <property name="sim.jdbc.driver" description="jdbc驱动" defaultValue="com.mysql.jdbc.Driver"/>
+        <property name="sim.jdbc.url" description="jdbc地址" defaultValue="jdbc:mysql://127.0.0.1:3306/simulator"/>
+        <property name="sim.jdbc.username" description="jdbc用户名" defaultValue="root"/>
+        <property name="sim.jdbc.password" description="jdbc密码" defaultValue="123456"/>
+
+        <!-- log4j2 -->
+        <property name="sim.log4j2.home" description="log4j2日志的文件主目录" defaultValue="/Users/kyg/logs/sim"/>
+
+        <property name="sim.file.root.path" description="文件根目录" defaultValue="/Users/kyg/code2/sim/sim-web/src/main/webapp/WEB-INF/"/>
+        <property name="sim.slow.method.time" description="慢方法时间(秒)" defaultValue="10"/>
+        <property name="sim.slow.interface.time" description="慢接口时间(秒)" defaultValue="10"/>
+        <property name="sim.redis.prefix.key" description="redis键的前缀" defaultValue="sim"/>
+        <property name="sim.cache.open" description="是否开启缓存,Y:开启,N:不开启" defaultValue="Y"/>
+    </group>
+    <script>
+        <generate template="app.properties"/>
+        <generate template="applicationContext-datasource.xml"/>
+        <generate template="applicationContext-redis.xml"/>
+        <generate template="log4j2.xml"/>
+    </script>
+</config>

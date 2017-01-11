@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <description>数据源配置</description>
+
+    <!-- 创建SqlSessionFactory，同时指定数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis.xml"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+        <property name="typeAliasesPackage" value="com.shhxzq.fin.simulator.model.vo"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!-- 配置dbcp数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${sim.jdbc.driver}"/>
+        <property name="url" value="${sim.jdbc.url}?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="${sim.jdbc.username}"/>
+        <property name="password" value="${sim.jdbc.password}"/>
+    </bean>
+
+    <!-- 使用annotation注解方式配置事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 配置SQLSession模板 -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+    <!--扫描basePackage下所有以@Repository注解的接口  -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.shhxzq.fin.simulator.mapper"/>
+        <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+        <property name="properties">
+            <value>
+                mappers=com.shhxzq.fin.simulator.mapper.MyMapper
+            </value>
+        </property>
+    </bean>
+
+</beans>

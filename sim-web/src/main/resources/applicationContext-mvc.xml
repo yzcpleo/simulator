@@ -1,0 +1,138 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:config proxy-target-class="true"/>
+
+    <!-- 自动扫描且只扫描@Controller -->
+    <context:component-scan base-package="com.shhxzq.fin.simulator.web.controller" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
+    <context:component-scan base-package="com.shhxzq.fin.simulator.web">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="features">
+                    <array>
+                        <value>WriteMapNullValue</value>
+                        <value>WriteNullStringAsEmpty</value>
+                    </array>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <mvc:resources mapping="/static/**" location="/WEB-INF/static/" cache-period="31556926"/>
+    <mvc:resources mapping="/upload/**" location="/WEB-INF/upload/" cache-period="31556926"/>
+    <mvc:resources mapping="/download/**" location="/WEB-INF/download/" cache-period="31556926"/>
+
+    <!-- 定义无需Controller的url<->view直接映射 -->
+    <mvc:view-controller path="/403" view-name="/403"/>
+    <mvc:view-controller path="/500" view-name="/500"/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <array>
+                <value>messages</value>
+            </array>
+        </property>
+        <property name="defaultEncoding">
+            <value>UTF-8</value>
+        </property>
+    </bean>
+
+    <!-- 图片上传的配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="102400000"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
+
+    <bean id="exceptionResolver" class="com.shhxzq.fin.simulator.web.exception.CustomSimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">500</prop>
+                <prop key=".ResourceNotFoundException">404</prop>
+                <prop key=".UnauthorizedException">403</prop>
+                <prop key=".FileUploadException">upload-error</prop>
+                <prop key=".MaxUploadSizeExceededException">upload-max-error</prop>
+            </props>
+        </property>
+        <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->
+        <property name="warnLogCategory" value="WARN"/>
+        <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->
+        <property name="defaultErrorView" value="500"/>
+        <!-- 默认HTTP状态码 -->
+        <property name="defaultStatusCode" value="500"/>
+    </bean>
+
+    <!-- 配置 FreeMarker视图解析器 -->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=utf-8"/>
+        <property name="requestContextAttribute" value="rca"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+    </bean>
+
+    <!-- FreeMarker的配置 -->
+    <bean id="freeMarkerConfigurer"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPaths" value="/WEB-INF/templates/"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">10</prop>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="number_format">#.##</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <prop key="auto_import">spring.ftl as spring,common.ftl as c</prop>
+            </props>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="block" value-ref="blockDirective"/>
+                <entry key="extends" value-ref="extendsDirective"/>
+                <entry key="override" value-ref="overrideDirective"/>
+                <entry key="super" value-ref="superDirective"/>
+                <entry key="shiro" value-ref="shiroTags"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

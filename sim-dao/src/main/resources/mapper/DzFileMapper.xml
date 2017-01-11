@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shhxzq.fin.simulator.mapper.DzFileMapper">
+    <resultMap id="BaseResultMap" type="com.shhxzq.fin.simulator.model.vo.DzFile">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="bnk_co" property="bnkCo" jdbcType="VARCHAR"/>
+        <result column="bnk_nm" property="bnkNm" jdbcType="VARCHAR"/>
+        <result column="tran_co" property="tranCo" jdbcType="VARCHAR"/>
+        <result column="tran_nm" property="tranNm" jdbcType="VARCHAR"/>
+        <result column="file_path" property="filePath" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+</mapper>
