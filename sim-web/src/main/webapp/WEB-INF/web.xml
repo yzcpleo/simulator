@@ -52,6 +52,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <listener>
+        <description>民生T+0的ServerSocket</description>
+        <listener-class>com.shhxzq.fin.simulator.web.listener.CMBCT0ServerSocketListener</listener-class>
+    </listener>
+
     <!-- spring MVC -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>

@@ -32,7 +32,7 @@ public class BankChannelServiceImpl extends BaseService<BankChannel> implements 
             criteria.andLike("bnkNm", StringUtil.toLikeString(bnkNm));
         }
 
-        example.setOrderByClause("created_time desc");
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return super.selectByExample(example);

@@ -3,8 +3,8 @@
 <tr id="bankTran-${bankTran.id}">
     <td>${bankTran.bnkNm}[${bankTran.bnkCo}]</td>
     <td>${bankTran.tranNm}[${bankTran.tranCo}]</td>
-    <td><#if bankTran.respCo!=''>${bankTran.respMsg}[${bankTran.respCo}]</#if></td>
-    <td title="${bankTran.dz_temp!''}"><@c.substring str="${bankTran.dz_temp!''}" len=30/></td>
+    <td title="${bankTran.respMsg!''}"><#if bankTran.respCo!=''><@c.substring str="${bankTran.respMsg}" len=10/>[${bankTran.respCo}]</#if></td>
+    <td title="${bankTran.dzTemp!''}"><@c.substring str="${bankTran.dzTemp!''}" len=60/></td>
     <td><#include "gen-push.ftl"/></td>
     <td><@c.relative_date datetime=bankTran.updatedTime/></td>
     <td>

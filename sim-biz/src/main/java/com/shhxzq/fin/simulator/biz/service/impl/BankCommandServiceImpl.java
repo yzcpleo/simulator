@@ -37,7 +37,7 @@ public class BankCommandServiceImpl extends BaseService<BankCommand> implements 
             criteria.andLike("merSerialNo", StringUtil.toLikeString(merSerialNo));
         }
 
-        example.setOrderByClause("created_time desc");
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return super.selectByExample(example);
@@ -61,5 +61,18 @@ public class BankCommandServiceImpl extends BaseService<BankCommand> implements 
         bankCommand.setTranSt(TranSt.Y.name());
 
         bankCommandMapper.updateByExampleSelective(bankCommand, example);
+    }
+
+    @Override
+    public BankCommand findBankCommandByMerSerialNo(String merSerialNo) {
+        BankCommand bankCommand = new BankCommand();
+        bankCommand.setMerSerialNo(merSerialNo);
+
+        return super.selectOne(bankCommand);
+    }
+
+    @Override
+    public void saveBankCommand(BankCommand bankCommand) {
+        super.save(bankCommand);
     }
 }

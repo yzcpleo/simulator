@@ -87,6 +87,7 @@
         <lombok.version>1.16.8</lombok.version>
         <commons-net.version>3.5</commons-net.version>
         <poi.version>3.12</poi.version>
+        <dom4j.version>1.6.1</dom4j.version>
     </properties>
 
     <build>
@@ -465,6 +466,11 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

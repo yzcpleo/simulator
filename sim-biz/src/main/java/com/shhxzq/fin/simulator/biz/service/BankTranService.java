@@ -49,4 +49,13 @@ public interface BankTranService {
      * @param bankTran
      */
     void saveBankTran(BankTran bankTran);
+
+    /**
+     * 查询交易类型
+     *
+     * @param bnkCo
+     * @param tranCo
+     * @return
+     */
+    BankTran findBankTranByBnkCoAndTranCo(String bnkCo, String tranCo);
 }

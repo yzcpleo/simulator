@@ -36,7 +36,7 @@ public class BankTranServiceImpl extends BaseService<BankTran> implements BankTr
             criteria.andEqualTo("bnkCo", bnkCo);
         }
 
-        example.setOrderByClause("created_time desc");
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return super.selectByExample(example);
@@ -67,5 +67,14 @@ public class BankTranServiceImpl extends BaseService<BankTran> implements BankTr
         bankTran.setBnkNm(bankChannel.getBnkNm());
 
         super.insertSelective(bankTran);
+    }
+
+    @Override
+    public BankTran findBankTranByBnkCoAndTranCo(String bnkCo, String tranCo) {
+        BankTran bankTran = new BankTran();
+        bankTran.setBnkCo(bnkCo);
+        bankTran.setTranCo(tranCo);
+
+        return super.selectOne(bankTran);
     }
 }

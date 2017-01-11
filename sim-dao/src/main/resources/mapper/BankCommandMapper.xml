@@ -1,31 +1,44 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shhxzq.fin.simulator.mapper.BankCommandMapper">
     <resultMap id="BaseResultMap" type="com.shhxzq.fin.simulator.model.vo.BankCommand">
         <!--
           WARNING - @mbggenerated
         -->
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="bnk_co" property="bnkCo" jdbcType="VARCHAR"/>
-        <result column="bnk_nm" property="bnkNm" jdbcType="VARCHAR"/>
-        <result column="mer_serial_no" property="merSerialNo" jdbcType="VARCHAR"/>
-        <result column="bnk_serial_no" property="bnkSerialNo" jdbcType="VARCHAR"/>
-        <result column="tran_co" property="tranCo" jdbcType="VARCHAR"/>
-        <result column="tran_nm" property="tranNm" jdbcType="VARCHAR"/>
-        <result column="sndr_acco_no" property="sndrAccoNo" jdbcType="VARCHAR"/>
-        <result column="amount" property="amount" jdbcType="VARCHAR"/>
-        <result column="rcvr_acco_no" property="rcvrAccoNo" jdbcType="VARCHAR"/>
-        <result column="work_day" property="workDay" jdbcType="VARCHAR"/>
-        <result column="protocol_no" property="protocolNo" jdbcType="VARCHAR"/>
-        <result column="rcvr_resv1" property="rcvrResv1" jdbcType="VARCHAR"/>
-        <result column="rcvr_resv2" property="rcvrResv2" jdbcType="VARCHAR"/>
-        <result column="rcvr_resv3" property="rcvrResv3" jdbcType="VARCHAR"/>
-        <result column="rcvr_resv4" property="rcvrResv4" jdbcType="VARCHAR"/>
-        <result column="resp_co" property="respCo" jdbcType="VARCHAR"/>
-        <result column="resp_msg" property="respMsg" jdbcType="VARCHAR"/>
-        <result column="tran_st" property="tranSt" jdbcType="VARCHAR"/>
-        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
-        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
-        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="bnk_co" jdbcType="VARCHAR" property="bnkCo"/>
+        <result column="bnk_nm" jdbcType="VARCHAR" property="bnkNm"/>
+        <result column="mer_serial_no" jdbcType="VARCHAR" property="merSerialNo"/>
+        <result column="bnk_serial_no" jdbcType="VARCHAR" property="bnkSerialNo"/>
+        <result column="tran_co" jdbcType="VARCHAR" property="tranCo"/>
+        <result column="tran_nm" jdbcType="VARCHAR" property="tranNm"/>
+        <result column="mer_date" jdbcType="VARCHAR" property="merDate"/>
+        <result column="mer_time" jdbcType="VARCHAR" property="merTime"/>
+        <result column="cur_co" jdbcType="VARCHAR" property="curCo"/>
+        <result column="sndr_acco_no" jdbcType="VARCHAR" property="sndrAccoNo"/>
+        <result column="sndr_acco_nm" jdbcType="VARCHAR" property="sndrAccoNm"/>
+        <result column="sndr_id_tp" jdbcType="VARCHAR" property="sndrIdTp"/>
+        <result column="sndr_id_no" jdbcType="VARCHAR" property="sndrIdNo"/>
+        <result column="sndr_resv1" jdbcType="VARCHAR" property="sndrResv1"/>
+        <result column="sndr_resv2" jdbcType="VARCHAR" property="sndrResv2"/>
+        <result column="amount" jdbcType="VARCHAR" property="amount"/>
+        <result column="fee_amt" jdbcType="VARCHAR" property="feeAmt"/>
+        <result column="tran_purpose" jdbcType="VARCHAR" property="tranPurpose"/>
+        <result column="tran_remark" jdbcType="VARCHAR" property="tranRemark"/>
+        <result column="rcvr_acco_no" jdbcType="VARCHAR" property="rcvrAccoNo"/>
+        <result column="rcvr_acct_nm" jdbcType="VARCHAR" property="rcvrAcctNm"/>
+        <result column="rcvr_id_tp" jdbcType="VARCHAR" property="rcvrIdTp"/>
+        <result column="rcvr_id_no" jdbcType="VARCHAR" property="rcvrIdNo"/>
+        <result column="rcvr_resv1" jdbcType="VARCHAR" property="rcvrResv1"/>
+        <result column="rcvr_resv2" jdbcType="VARCHAR" property="rcvrResv2"/>
+        <result column="work_day" jdbcType="VARCHAR" property="workDay"/>
+        <result column="protocol_no" jdbcType="VARCHAR" property="protocolNo"/>
+        <result column="resp_co" jdbcType="VARCHAR" property="respCo"/>
+        <result column="resp_msg" jdbcType="VARCHAR" property="respMsg"/>
+        <result column="lock_st" jdbcType="VARCHAR" property="lockSt"/>
+        <result column="tran_st" jdbcType="VARCHAR" property="tranSt"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
     </resultMap>
 </mapper>

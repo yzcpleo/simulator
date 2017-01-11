@@ -43,7 +43,7 @@
         </javaClientGenerator>
 
         <!--table name-->
-        <table tableName="table_name">
+        <table tableName="bank_command">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
     </context>

@@ -60,7 +60,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
             criteria.andEqualTo("fullname", fullname);
         }
 
-        example.setOrderByClause("created_time desc");
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return super.selectByExample(example);

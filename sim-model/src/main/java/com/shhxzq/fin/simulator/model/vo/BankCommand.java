@@ -1,9 +1,10 @@
 package com.shhxzq.fin.simulator.model.vo;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import lombok.Data;
 
 @Table(name = "bank_command")
 @Data
@@ -52,15 +53,81 @@ public class BankCommand implements Serializable {
     private String tranNm;
 
     /**
-     * 出款方账号
+     * 商户交易日期
+     */
+    @Column(name = "mer_date")
+    private String merDate;
+
+    /**
+     * 商户交易时间
+     */
+    @Column(name = "mer_time")
+    private String merTime;
+
+    /**
+     * 币种
+     */
+    @Column(name = "cur_co")
+    private String curCo;
+
+    /**
+     * 付款方账号
      */
     @Column(name = "sndr_acco_no")
     private String sndrAccoNo;
 
     /**
+     * 付款方账号名称
+     */
+    @Column(name = "sndr_acco_nm")
+    private String sndrAccoNm;
+
+    /**
+     * 付款方证件类型
+     */
+    @Column(name = "sndr_id_tp")
+    private String sndrIdTp;
+
+    /**
+     * 付款方证件号码
+     */
+    @Column(name = "sndr_id_no")
+    private String sndrIdNo;
+
+    /**
+     * 付款方保留字段1
+     */
+    @Column(name = "sndr_resv1")
+    private String sndrResv1;
+
+    /**
+     * 付款方保留字段2
+     */
+    @Column(name = "sndr_resv2")
+    private String sndrResv2;
+
+    /**
      * 交易金额
      */
     private String amount;
+
+    /**
+     * 手续费
+     */
+    @Column(name = "fee_amt")
+    private String feeAmt;
+
+    /**
+     * 转账用途
+     */
+    @Column(name = "tran_purpose")
+    private String tranPurpose;
+
+    /**
+     * 转账附言
+     */
+    @Column(name = "tran_remark")
+    private String tranRemark;
 
     /**
      * 收款方账号
@@ -69,7 +136,37 @@ public class BankCommand implements Serializable {
     private String rcvrAccoNo;
 
     /**
-     * 工作日
+     * 收款方账号名称
+     */
+    @Column(name = "rcvr_acct_nm")
+    private String rcvrAcctNm;
+
+    /**
+     * 收款方证件类型
+     */
+    @Column(name = "rcvr_id_tp")
+    private String rcvrIdTp;
+
+    /**
+     * 收款方证件号码
+     */
+    @Column(name = "rcvr_id_no")
+    private String rcvrIdNo;
+
+    /**
+     * 收款方保留字段1
+     */
+    @Column(name = "rcvr_resv1")
+    private String rcvrResv1;
+
+    /**
+     * 收款方保留字段2
+     */
+    @Column(name = "rcvr_resv2")
+    private String rcvrResv2;
+
+    /**
+     * 工作日(对账时使用)
      */
     @Column(name = "work_day")
     private String workDay;
@@ -79,30 +176,6 @@ public class BankCommand implements Serializable {
      */
     @Column(name = "protocol_no")
     private String protocolNo;
-
-    /**
-     * 备用1
-     */
-    @Column(name = "rcvr_resv1")
-    private String rcvrResv1;
-
-    /**
-     * 备用2
-     */
-    @Column(name = "rcvr_resv2")
-    private String rcvrResv2;
-
-    /**
-     * 备用3
-     */
-    @Column(name = "rcvr_resv3")
-    private String rcvrResv3;
-
-    /**
-     * 备用4
-     */
-    @Column(name = "rcvr_resv4")
-    private String rcvrResv4;
 
     /**
      * 错误码
@@ -115,6 +188,12 @@ public class BankCommand implements Serializable {
      */
     @Column(name = "resp_msg")
     private String respMsg;
+
+    /**
+     * 锁状态:{N:未锁,T:正在交易}
+     */
+    @Column(name = "lock_st")
+    private String lockSt;
 
     /**
      * 交易状态:{Y:成功,F:失败,I:处理中}

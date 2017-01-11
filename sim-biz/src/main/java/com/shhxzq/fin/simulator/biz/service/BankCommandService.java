@@ -40,4 +40,18 @@ public interface BankCommandService {
      */
     void updateBankCommandTranSt();
 
+    /**
+     * 根据商户流水号查询交易
+     *
+     * @param merSerialNo
+     * @return
+     */
+    BankCommand findBankCommandByMerSerialNo(String merSerialNo);
+
+    /**
+     * 保存交易流水
+     *
+     * @param command
+     */
+    void saveBankCommand(BankCommand command);
 }

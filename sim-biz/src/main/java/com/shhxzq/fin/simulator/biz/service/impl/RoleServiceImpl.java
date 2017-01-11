@@ -66,7 +66,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
             criteria.andLike("name", String.format("%%%s%%", name));
         }
 
-        example.setOrderByClause("created_time desc");
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return super.selectByExample(example);

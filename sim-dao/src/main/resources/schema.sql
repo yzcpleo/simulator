@@ -272,28 +272,54 @@ CREATE TABLE bank_command
   COMMENT '交易代码',
   tran_nm       VARCHAR(32)                           NOT NULL
   COMMENT '交易名称',
-  sndr_acco_no  VARCHAR(32)                           NOT NULL                DEFAULT ''
-  COMMENT '出款方账号',
+  mer_date      VARCHAR(8)                            NOT NULL                DEFAULT ''
+  COMMENT '商户交易日期',
+  mer_time      VARCHAR(6)                            NOT NULL                DEFAULT ''
+  COMMENT '商户交易时间',
+  cur_co        VARCHAR(3)                            NOT NULL                DEFAULT ''
+  COMMENT '币种',
+  sndr_acco_no  VARCHAR(64)                           NOT NULL                DEFAULT ''
+  COMMENT '付款方账号',
+  sndr_acco_nm  VARCHAR(64)                           NOT NULL                DEFAULT ''
+  COMMENT '付款方账号名称',
+  sndr_id_tp    VARCHAR(10)                           NOT NULL                DEFAULT ''
+  COMMENT '付款方证件类型',
+  sndr_id_no    VARCHAR(35)                           NOT NULL                DEFAULT ''
+  COMMENT '付款方证件号码',
+  sndr_resv1    VARCHAR(32)                           NOT NULL                DEFAULT ''
+  COMMENT '付款方保留字段1',
+  sndr_resv2    VARCHAR(128)                          NOT NULL                DEFAULT ''
+  COMMENT '付款方保留字段2',
   amount        VARCHAR(32)                           NOT NULL                DEFAULT ''
   COMMENT '交易金额',
-  rcvr_acco_no  VARCHAR(32)                           NOT NULL                DEFAULT ''
+  fee_amt       VARCHAR(32)                           NOT NULL                DEFAULT ''
+  COMMENT '手续费',
+  tran_purpose  VARCHAR(320)                          NOT NULL                DEFAULT ''
+  COMMENT '转账用途',
+  tran_remark   VARCHAR(320)                          NOT NULL                DEFAULT ''
+  COMMENT '转账附言',
+  rcvr_acco_no  VARCHAR(64)                           NOT NULL                DEFAULT ''
   COMMENT '收款方账号',
+  rcvr_acct_nm  VARCHAR(64)                           NOT NULL                DEFAULT ''
+  COMMENT '收款方账号名称',
+  rcvr_id_tp    VARCHAR(10)                           NOT NULL                DEFAULT ''
+  COMMENT '收款方证件类型',
+  rcvr_id_no    VARCHAR(35)                           NOT NULL                DEFAULT ''
+  COMMENT '收款方证件号码',
+  rcvr_resv1    VARCHAR(32)                           NOT NULL                DEFAULT ''
+  COMMENT '收款方保留字段1',
+  rcvr_resv2    VARCHAR(128)                          NOT NULL                DEFAULT ''
+  COMMENT '收款方保留字段2',
   work_day      VARCHAR(8)                            NOT NULL                DEFAULT ''
-  COMMENT '工作日',
+  COMMENT '工作日(对账时使用)',
   protocol_no   VARCHAR(32)                           NOT NULL                DEFAULT ''
   COMMENT '协议号',
-  rcvr_resv1    VARCHAR(32)                           NOT NULL                DEFAULT ''
-  COMMENT '备用1',
-  rcvr_resv2    VARCHAR(32)                           NOT NULL                DEFAULT ''
-  COMMENT '备用2',
-  rcvr_resv3    VARCHAR(32)                           NOT NULL                DEFAULT ''
-  COMMENT '备用3',
-  rcvr_resv4    VARCHAR(32)                           NOT NULL                DEFAULT ''
-  COMMENT '备用4',
   resp_co       VARCHAR(32)                           NOT NULL
   COMMENT '错误码',
   resp_msg      VARCHAR(128)                          NOT NULL
   COMMENT '错误描述',
+  lock_st       VARCHAR(32)                           NOT NULL                DEFAULT 'N'
+  COMMENT '锁状态:{N:未锁,T:正在交易}',
   tran_st       VARCHAR(1)                            NOT NULL
   COMMENT '交易状态:{Y:成功,F:失败,I:处理中}',
   is_deleted    TINYINT                               NOT NULL                DEFAULT 0
@@ -312,35 +338,10 @@ CREATE UNIQUE INDEX mer_serial_no_UNIQUE
   ON bank_command (mer_serial_no);
 CREATE UNIQUE INDEX bnk_serial_no_UNIQUE
   ON bank_command (bnk_serial_no);
-
--- ----------------------------
---  Table structure for bank_command_log
--- ----------------------------
-DROP TABLE
-IF EXISTS bank_command_log;
-
-CREATE TABLE bank_command_log
-(
-  id            BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
-  COMMENT '主键, 自增',
-  mer_serial_no VARCHAR(20)                           NOT NULL
-  COMMENT '商户流水号',
-  req_xml       LONGTEXT                              NOT NULL
-  COMMENT '请求报文',
-  res_xml       LONGTEXT                              NOT NULL
-  COMMENT '响应报文',
-  is_deleted    TINYINT                               NOT NULL                DEFAULT 0
-  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
-  created_time  TIMESTAMP                             NOT NULL                DEFAULT CURRENT_TIMESTAMP
-  COMMENT '创建时间',
-  updated_time  TIMESTAMP                             NOT NULL                DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-  COMMENT '更新时间'
-)
-  COMMENT '交易日志表';
-CREATE UNIQUE INDEX id_UNIQUE
-  ON bank_command_log (id);
-CREATE INDEX create_ix
-  ON bank_command_log (created_time);
+CREATE INDEX tran_co_ix
+  ON bank_command (tran_co);
+CREATE INDEX work_day_ix
+  ON bank_command (work_day);
 
 -- ----------------------------
 --  Table structure for dz_file
@@ -435,23 +436,5 @@ INSERT INTO role_menu SELECT
                         code
                       FROM menu;
 
-# 银行相关初始化数据
-
--- ----------------------------
---  data for bank
--- ----------------------------
-INSERT INTO bank_channel (bnk_co, bnk_nm)
-VALUES
-  ('sh2', '上海快捷'),
-  ('sh3', '上海银企'),
-  ('cmbct0', '民生T+0');
-
-INSERT INTO bank_tran (bnk_co, bnk_nm, tran_co, tran_nm, is_gen_dz, is_push_dz)
-VALUES
-  ('sh2', '上海快捷', 'sign', '签约', 0, 0),
-  ('sh2', '上海快捷', 'pay', '申购', 0, 0),
-  ('sh2', '上海快捷', 'unsign', '解约', 0, 0),
-  ('sh3', '上海银企', 'redeem', '赎回', 0, 0),
-  ('cmbct0', '民生T+0', 'redeem', '赎回', 1, 1);
 
 

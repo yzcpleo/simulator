@@ -42,7 +42,7 @@ public class BankRespServiceImpl extends BaseService<BankResp> implements BankRe
             criteria.andEqualTo("bnkCo", bnkCo);
         }
 
-        example.setOrderByClause("created_time desc");
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return super.selectByExample(example);
@@ -141,7 +141,9 @@ public class BankRespServiceImpl extends BaseService<BankResp> implements BankRe
         List<KeyValuePair> list = new ArrayList();
 
         for (String[] arr : data) {
-            list.add(new KeyValuePair(arr[0], arr[1]));
+            if (StringUtils.isNotEmpty(arr[0])) {
+                list.add(new KeyValuePair(arr[0], arr[1]));
+            }
         }
 
         return list;

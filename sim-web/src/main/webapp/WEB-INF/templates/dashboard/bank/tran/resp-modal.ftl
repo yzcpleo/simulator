@@ -14,7 +14,7 @@
                     <option value="">--不改变交易结果--</option>
                     <#list bankResps as bankResp>
                         <option value="${bankResp.respCo}"
-                                <#if bankTran.respCo==bankResp.respCo>selected</#if>><@c.substring str="${bankResp.respMsg}" len=8/>
+                                <#if bankTran.respCo==bankResp.respCo>selected</#if>><@c.substring str="${bankResp.respMsg}" len=16/>
                             [${bankResp.respCo}]
                         </option>
                     </#list>
