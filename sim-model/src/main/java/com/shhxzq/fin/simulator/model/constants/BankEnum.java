@@ -18,6 +18,8 @@ public enum BankEnum implements Serializable {
     SPDB("spdb", "上海浦发"),
     CEB("ceb", "光大银行"),
     CCB("ccb", "建设银行"),
+    CMBC("cmbc", "民生超网"),
+    CMBC2("cmbc2", "民生快捷"),
     CMBCT0("cmbct0", "民生T+0"),
     SH2("sh2", "上海快捷"),
     SH3("sh3", "上海银企");
