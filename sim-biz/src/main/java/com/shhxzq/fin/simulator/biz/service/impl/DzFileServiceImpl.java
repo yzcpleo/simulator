@@ -24,6 +24,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -165,9 +166,9 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
 
             // 处理文件头
             if (BankEnum.CP.getBnkCo().equals(bankTran.getBnkCo())) {
-//                String header = buildDzHead(bank, transType, head, transactions);
-//                out.write(head);
-//                out.newLine();
+                String header = buildDzHead(bankTran, bankCommands);
+                out.write(header);
+                out.newLine();
             }
 
             for (BankCommand bankCommand : bankCommands) {
@@ -310,24 +311,55 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
      *
      * @return
      */
-    private String buildDzHead(BankTran bankTran, String header, List<BankCommand> bankCommands) throws Exception {
-//        if (bank.getBankNo().equals(AppConstants.BANK_NO_CP) && transType.equals(TransTypeEnum.PAY.getType())) {
-//            // 中国银联代扣: 总笔数|总金额|成功笔数|成功金额|非成功笔数|非成功金额
-//            head = String.format(head,
-//                    transactions.size(), getAmount(transactions, "beSer", false, ""),
-//                    getCount(transactions, "stat", true, "Y"), getAmount(transactions, "stat", true, "Y"),
-//                    getCount(transactions, "stat", false, "Y"), getAmount(transactions, "stat", false, "Y"));
-//        } else if (bank.getBankNo().equals(AppConstants.BANK_NO_CP) && transType.equals(TransTypeEnum.REDEEM.getType())) {
-//            // 中国银联代付: 总笔数|总金额|退单总笔数|退单总金额|重汇总笔数|重汇总金额|重汇退单总笔数|重汇退单总金额|签名值
-//            head = String.format(head,
-//                    transactions.size(), getAmount(transactions, "beSer", false, ""),
-//                    getCount(transactions, "transStat", true, "6", "9"), getAmount(transactions, "transStat", true, "6", "9"),
-//                    getCount(transactions, "transStat", true, "7", "8", "9"), getAmount(transactions, "transStat", true, "7", "8", "9"),
-//                    getCount(transactions, "transStat", true, "9"), getAmount(transactions, "transStat", true, "9"), "");
-//        } else if (bank.getBankNo().equals(AppConstants.BANK_NO_GDNY)){
-//            head = String.format(head,
-//                    getAmount(transactions, "stat", true, "Y"), getCount(transactions, "stat", true, "Y"));
-//        }
+    private String buildDzHead(BankTran bankTran, List<BankCommand> bankCommands) throws Exception {
+        String header = "";
+        if (bankTran.getBnkCo().equals(BankEnum.CP.getBnkCo()) && bankTran.getTranCo().equals("pay")) {
+            // 中国银联代扣: 总笔数|总金额|成功笔数|成功金额|非成功笔数|非成功金额
+            header = String.format("%s|%s|%s|%s|%s|%s",
+                    bankCommands.size(), getAmount(bankCommands, "merSerialNo", false, ""),
+                    getCount(bankCommands, "tranSt", true, "Y"), getAmount(bankCommands, "tranSt", true, "Y"),
+                    getCount(bankCommands, "tranSt", false, "Y"), getAmount(bankCommands, "tranSt", false, "Y"));
+        } else if (bankTran.getBnkCo().equals(BankEnum.CP.getBnkCo()) && bankTran.getTranCo().equals("redeem")) {
+            // 中国银联代付: 总笔数|总金额|退单总笔数|退单总金额|重汇总笔数|重汇总金额|重汇退单总笔数|重汇退单总金额|签名值
+            header = String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s",
+                    bankCommands.size(), getAmount(bankCommands, "merSerialNo", false, ""),
+                    getCount(bankCommands, "respCo", true, "6", "9"), getAmount(bankCommands, "respCo", true, "6", "9"),
+                    getCount(bankCommands, "respCo", true, "7", "8", "9"), getAmount(bankCommands, "respCo", true, "7", "8", "9"),
+                    getCount(bankCommands, "respCo", true, "9"), getAmount(bankCommands, "respCo", true, "9"), "");
+        } else if (BankEnum.GDNY.equals(bankTran.getBnkCo())) {
+            header = String.format("%s|%s", getAmount(bankCommands, "tranSt", true, "Y"), getCount(bankCommands, "tranSt", true, "Y"));
+        }
         return header;
+    }
+
+
+    private String getCount(List<BankCommand> transactions, String field, boolean eq, String... vals) throws Exception {
+        Class clazz = BankCommand.class;
+        int count = 0;
+        for (BankCommand trans : transactions) {
+            String val = String.valueOf(clazz.getMethod("get" + StringUtil.capitalize(field)).invoke(trans));
+            if (eq && StringUtil.in(val, vals)) {
+                count++;
+            } else if (!eq && !StringUtil.in(val, vals)) {
+                count++;
+            }
+        }
+        return count + "";
+    }
+
+    private String getAmount(List<BankCommand> transactions, String field, boolean eq, String... vals) throws Exception {
+        Class clazz = BankCommand.class;
+        BigDecimal total = new BigDecimal(0);
+        for (BankCommand trans : transactions) {
+            String val = String.valueOf(clazz.getMethod("get" + StringUtil.capitalize(field)).invoke(trans));
+            if (eq && StringUtil.in(val, vals)) {
+                BigDecimal amount = new BigDecimal(trans.getAmount());
+                total = total.add(amount);
+            } else if (!eq && !StringUtil.in(val, vals)) {
+                BigDecimal amount = new BigDecimal(trans.getAmount());
+                total = total.add(amount);
+            }
+        }
+        return String.valueOf(total);
     }
 }
