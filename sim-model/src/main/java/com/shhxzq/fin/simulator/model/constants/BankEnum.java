@@ -20,6 +20,9 @@ public enum BankEnum implements Serializable {
     CCB("ccb", "建设银行"),
     CMBC("cmbc", "民生超网"),
     CMBC2("cmbc2", "民生快捷"),
+    ICBC("icbc", "工商银行"),
+    CMB("cmb", "招商银行"),
+    PAB("pab", "平安银行"),
     CMBCT0("cmbct0", "民生T+0"),
     SH2("sh2", "上海快捷"),
     SH3("sh3", "上海银企");

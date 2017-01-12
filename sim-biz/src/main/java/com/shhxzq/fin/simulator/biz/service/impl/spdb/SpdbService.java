@@ -473,7 +473,7 @@ public class SpdbService {
         log.info("============ 浦发非当日充值对账(IDFR)开始 ============");
         Request request = (Request) requestParser.fromXML(requestString);
         HashMap<String, String> plainMap = plainToMap(request.getPlain());
-        List<BankCommand> transactions = bankCommandService.findBankCommands4Dz(BankEnum.SPDB.getBnkCo(), "pay", plainMap.get("OSttDate"));
+        List<BankCommand> transactions = bankCommandService.findBankCommands4Dz("pay", BankEnum.SPDB.getBnkCo(), plainMap.get("OSttDate"));
         StringBuilder plain = new StringBuilder();
         plain.append("SettFile=");
         for (BankCommand tran : transactions) {

@@ -2,12 +2,12 @@ package com.shhxzq.fin.simulator.web.controller.web;
 
 import com.shhxzq.fin.simulator.biz.service.BankCommandService;
 import com.shhxzq.fin.simulator.biz.service.BankTranService;
+import com.shhxzq.fin.simulator.biz.util.Base64Util;
 import com.shhxzq.fin.simulator.common.util.DateUtils;
 import com.shhxzq.fin.simulator.common.util.XmlUtil;
 import com.shhxzq.fin.simulator.model.constants.BankEnum;
 import com.shhxzq.fin.simulator.model.vo.BankCommand;
 import com.shhxzq.fin.simulator.model.vo.BankTran;
-import com.shhxzq.fin.simulator.web.util.Base64Util;
 import com.shhxzq.fin.simulator.web.util.EctUtil;
 import com.shhxzq.fin.simulator.web.util.HttpUtil;
 import lombok.extern.log4j.Log4j2;

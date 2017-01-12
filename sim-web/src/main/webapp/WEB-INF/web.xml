@@ -57,6 +57,11 @@
         <listener-class>com.shhxzq.fin.simulator.web.listener.CMBCT0ServerSocketListener</listener-class>
     </listener>
 
+    <listener>
+        <description>其他银行通道的ServerSocket</description>
+        <listener-class>com.shhxzq.fin.simulator.web.listener.ServerSocketListener</listener-class>
+    </listener>
+
     <!-- spring MVC -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>

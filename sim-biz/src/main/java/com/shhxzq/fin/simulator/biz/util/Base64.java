@@ -1,4 +1,4 @@
-package com.shhxzq.fin.simulator.web.util;
+package com.shhxzq.fin.simulator.biz.util;
 
 /**
  * @author kangyonggan
