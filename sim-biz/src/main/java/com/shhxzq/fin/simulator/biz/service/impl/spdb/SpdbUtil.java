@@ -18,8 +18,10 @@ public class SpdbUtil {
 //        transaction.setMerId(bank.getMerId());
         transaction.setBnkSerialNo(serNo);
         transaction.setBnkCo(bankTran.getBnkCo());
+        transaction.setBnkNm(bankTran.getBnkNm());
         transaction.setRcvrAccoNo(map.get("IdNo"));
         transaction.setTranCo(bankTran.getTranCo());
+        transaction.setTranNm(bankTran.getTranNm());
         transaction.setAmount(map.get("TranAmt"));
         transaction.setRespCo(retCode);
 
@@ -47,8 +49,10 @@ public class SpdbUtil {
 //        transaction.setMerId(bank.getMerId());
         transaction.setBnkSerialNo(serNo);
         transaction.setBnkCo(bankTran.getBnkCo());
+        transaction.setBnkNm(bankTran.getBnkNm());
         transaction.setRcvrAccoNo(request.getBody().getSignature().getBody().getAcctNo());
         transaction.setTranCo(bankTran.getTranCo());
+        transaction.setTranNm(bankTran.getTranNm());
         transaction.setAmount(request.getBody().getSignature().getBody().getAmount());
         transaction.setRespCo(retCode);
 
@@ -56,7 +60,7 @@ public class SpdbUtil {
         if ("1".equals(retCode)) {
             stat = "Y";
         }
-        transaction.setTranCo(stat);
+        transaction.setTranSt(stat);
         transaction.setWorkDay(formate.format(new Date()));
 
         return transaction;
