@@ -19,7 +19,7 @@ public interface DzFileService {
      */
     List<DzFile> searchDzFiles(int pageNum, String bnkCo);
 
-     /**
+    /**
      * 生成对账文件
      *
      * @param bankTranId
@@ -35,4 +35,19 @@ public interface DzFileService {
      * @throws Exception
      */
     void pushDzFile(Long id) throws Exception;
+
+    /**
+     * 批量生成对账文件
+     *
+     * @param workDay
+     */
+    void saveDzFiles(String workDay);
+
+    /**
+     * 批量推送对账文件
+     *
+     * @throws Exception
+     */
+    void pushDzFiles() throws Exception;
+
 }

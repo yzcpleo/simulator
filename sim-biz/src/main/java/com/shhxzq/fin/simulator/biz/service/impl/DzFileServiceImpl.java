@@ -82,9 +82,9 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
 
         // 5. 处理特殊格式文件
         if (BankEnum.CP.getBnkCo().equals(bankTran.getBnkCo()) && "redeem".equals(bankTran.getTranCo())) {
-            log.info("将银联的{}转为{}...", fileName, FILE_UPLOAD_PATH +  fileName + ".zip");
-            ZipUtil.zip(FILE_UPLOAD_PATH + fileName, FILE_UPLOAD_PATH +  fileName + ".zip");
-            fileName = FILE_UPLOAD_PATH +  fileName + ".zip";
+            log.info("将银联的{}转为{}...", fileName, FILE_UPLOAD_PATH + fileName + ".zip");
+            ZipUtil.zip(FILE_UPLOAD_PATH + fileName, FILE_UPLOAD_PATH + fileName + ".zip");
+            fileName = FILE_UPLOAD_PATH + fileName + ".zip";
             log.info("转换成功!zip文件路径: {}", fileName);
         }
 
@@ -102,6 +102,28 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
 
         if (bnkCo.equals(BankEnum.CMBCT0.getBnkCo())) {
             Shell.exec("sh /srv/admin/push-cmbct0-dz.sh");
+        } else {
+            log.warn("该交易不需要推送对账文件，bnkNm:{}, bnkNm:{}", dzFile.getBnkNm(), dzFile.getTranNm());
+        }
+    }
+
+    @Override
+    public void saveDzFiles(String workDay) {
+        List<BankTran> bankTrans = bankTranService.findbankTran4Gen();
+        log.info("共有{}种交易类型需要生成对账文件");
+
+        for (BankTran bankTran : bankTrans) {
+            saveDzFile(bankTran.getId(), workDay);
+        }
+    }
+
+    @Override
+    public void pushDzFiles() throws Exception {
+        List<BankTran> bankTrans = bankTranService.findbankTran4Push();
+        log.info("共有{}种交易类型需要推送对账文件", bankTrans.size());
+
+        for (BankTran bankTran : bankTrans) {
+            pushDzFile(bankTran.getId());
         }
     }
 
@@ -246,20 +268,20 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
                         String respCo = bankCommand.getRespCo();
                         if (StringUtil.in(respCo, "0100", "0101", "0102", "0103", "0104")) {
                             val = "6";
-                        } else if("0105".equals(respCo)){
+                        } else if ("0105".equals(respCo)) {
                             val = "5";
                         }
                     }
                 }
-            } else if (BankEnum.GDNY.getBnkCo().equals(bnkCo)){
-                if("transType".equals(field)){
-                    if("pay".equals(val)){
+            } else if (BankEnum.GDNY.getBnkCo().equals(bnkCo)) {
+                if ("transType".equals(field)) {
+                    if ("pay".equals(val)) {
                         val = "1";
-                    } else if("redeem".equals(val)){
+                    } else if ("redeem".equals(val)) {
                         val = "4";
                     }
-                } else if ("stat".equals(field)){
-                    if("Y".equals(val)){
+                } else if ("stat".equals(field)) {
+                    if ("Y".equals(val)) {
                         val = "S";
                     }
                 }

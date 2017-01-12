@@ -88,12 +88,35 @@ public class DashboardDataDzController extends BaseController {
     }
 
     /**
+     * 手动生成所有的对账文件
+     *
+     * @return
+     */
+    @RequestMapping(value = "genall", method = RequestMethod.GET)
+    public String genall() {
+        return getPathRoot() + "/genall-modal";
+    }
+
+    /**
+     * 手动生成所有的对账文件提交
+     *
+     * @param workDay
+     * @return
+     */
+    @RequestMapping(value = "genall", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> genall(@RequestParam("workDay") String workDay) {
+        dzFileService.saveDzFiles(workDay);
+        return getResultMap();
+    }
+
+    /**
      * 手动推送
      *
      * @param id
      * @return
      */
-    @RequestMapping(value = "{id:[\\d]+}/push", method = RequestMethod.POST)
+    @RequestMapping(value = "{id:[\\d]+}/push", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> push(@PathVariable("id") Long id) {
         Map<String, Object> resultMap = getResultMap();
@@ -102,6 +125,24 @@ public class DashboardDataDzController extends BaseController {
         } catch (Exception e) {
             log.error("对账文件推送失败", e);
             setResultMapFailure(resultMap, "对账文件推送失败，请联系管理员!");
+        }
+        return resultMap;
+    }
+
+    /**
+     * 手动批量推送
+     *
+     * @return
+     */
+    @RequestMapping(value = "pushall", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> pushall() {
+        Map<String, Object> resultMap = getResultMap();
+        try {
+            dzFileService.pushDzFiles();
+        } catch (Exception e) {
+            log.error("对账文件批量推送失败", e);
+            setResultMapFailure(resultMap, "对账文件批量推送失败，请联系管理员!");
         }
         return resultMap;
     }

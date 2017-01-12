@@ -1,9 +1,7 @@
 $(function () {
     updateState("data/dz");
 
-    var $table = $('#dzFile-table');
-
-    $table.on('click', 'a[data-role=dzFile-push]', function () {
+    $(document).on('click', 'a[data-role=dzFile-push]', function () {
         var $trigger = $(this);
         var url = $trigger.data('url');
         var title = $trigger.attr("title");

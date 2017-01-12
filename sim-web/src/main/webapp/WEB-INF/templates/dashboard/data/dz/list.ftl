@@ -5,16 +5,16 @@
     <h1>
         对账文件列表
         <small class="pull-right">
-            <a href="javascript:" class="btn btn-sm btn-inverse" data-role="dzFile" title="批量推送对账文件"
+            <a href="${ctx}/dashboard/data/dz/genall" class="btn btn-sm btn-inverse" data-toggle="modal"
+               data-target="#myModal" data-backdrop="static">批量生成
+            </a>
+            <a href="javascript:" class="btn btn-sm btn-inverse" data-role="dzFile-push" title="批量推送给商户"
                data-url="${ctx}/dashboard/data/dz/pushall">
                 批量推送
             </a>
-            <a href="javascript:" class="btn btn-sm btn-inverse" data-role="dzFile" title="批量生成对账文件"
-               data-url="${ctx}/dashboard/data/dz/genall">
-                批量生成
-            </a>
             <a href="${ctx}/dashboard/data/dz/gen" class="btn btn-sm btn-inverse" data-toggle="modal"
-               data-target="#myModal" data-backdrop="static">单个生成</a>
+               data-target="#myModal" data-backdrop="static">单个生成
+            </a>
         </small>
     </h1>
 </div>

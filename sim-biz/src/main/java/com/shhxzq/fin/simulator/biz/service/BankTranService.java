@@ -59,6 +59,18 @@ public interface BankTranService {
      */
     BankTran findBankTranByBnkCoAndTranCo(String bnkCo, String tranCo);
 
+    /**
+     * 查找用来生成对账的交易类型
+     *
+     * @return
+     */
     List<BankTran> findbankTran4Gen();
+
+    /**
+     * 查找用来推送对账的交易类型
+     *
+     * @return
+     */
+    List<BankTran> findbankTran4Push();
 
 }
