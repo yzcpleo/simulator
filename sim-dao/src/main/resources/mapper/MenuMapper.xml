@@ -19,7 +19,7 @@
 
     <select id="selectMenusByUsername" resultMap="BaseResultMap">
         SELECT DISTINCT m.*
-        FROM menu m, role_menu rm, user_role ur
+        FROM sim_menu m, sim_role_menu rm, sim_user_role ur
         <where>
             m.code = rm.menu_code
             AND rm.role_code = ur.role_code
@@ -31,7 +31,7 @@
 
     <select id="selectMenus4Role" resultMap="BaseResultMap">
         SELECT m.*
-        FROM menu m, role_menu rm
+        FROM sim_menu m, sim_role_menu rm
         <where>
             m.code = rm.menu_code
             AND rm.role_code = #{code}

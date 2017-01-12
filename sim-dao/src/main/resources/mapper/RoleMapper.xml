@@ -16,7 +16,7 @@
 
     <select id="selectRolesByUsername" resultMap="BaseResultMap">
         SELECT r.*
-        FROM role r, user_role ur
+        FROM sim_role r, sim_user_role ur
         <where>
             r.code = ur.role_code
             AND ur.username = #{username}
@@ -26,18 +26,18 @@
     </select>
 
     <delete id="deleteAllRolesByUsername">
-        DELETE FROM user_role
+        DELETE FROM sim_user_role
         <where>
             username = #{username}
         </where>
     </delete>
 
     <delete id="deleteRoleMenus">
-        DELETE FROM role_menu WHERE role_code = #{code}
+        DELETE FROM sim_role_menu WHERE role_code = #{code}
     </delete>
 
     <insert id="insertRoleMenus">
-        INSERT INTO role_menu (role_code, menu_code) VALUES
+        INSERT INTO sim_role_menu (role_code, menu_code) VALUES
         <foreach collection="menuCodes" item="menuCode" separator=",">
             (
             #{code}, #{menuCode}

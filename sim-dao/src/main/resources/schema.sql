@@ -4,15 +4,15 @@ CREATE DATABASE simulator
   DEFAULT CHARACTER SET utf8
   COLLATE utf8_general_ci;
 
-USE simulator;
+USE pentos;
 
 -- ----------------------------
 --  Table structure for user
 -- ----------------------------
 DROP TABLE
-IF EXISTS user;
+IF EXISTS sim_user;
 
-CREATE TABLE user
+CREATE TABLE sim_user
 (
   id            BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -39,19 +39,19 @@ CREATE TABLE user
 )
   COMMENT '用户表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON user (id);
+  ON sim_user (id);
 CREATE INDEX create_ix
-  ON user (created_time);
+  ON sim_user (created_time);
 CREATE UNIQUE INDEX username_UNIQUE
-  ON user (username);
+  ON sim_user (username);
 
 -- ----------------------------
 --  Table structure for role
 -- ----------------------------
 DROP TABLE
-IF EXISTS role;
+IF EXISTS sim_role;
 
-CREATE TABLE role
+CREATE TABLE sim_role
 (
   id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -68,19 +68,19 @@ CREATE TABLE role
 )
   COMMENT '角色表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON role (id);
+  ON sim_role (id);
 CREATE INDEX create_ix
-  ON role (created_time);
+  ON sim_role (created_time);
 CREATE UNIQUE INDEX code_UNIQUE
-  ON role (code);
+  ON sim_role (code);
 
 -- ----------------------------
 --  Table structure for menu
 -- ----------------------------
 DROP TABLE
-IF EXISTS menu;
+IF EXISTS sim_menu;
 
-CREATE TABLE menu
+CREATE TABLE sim_menu
 (
   id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -105,21 +105,21 @@ CREATE TABLE menu
 )
   COMMENT '菜单表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON menu (id);
+  ON sim_menu (id);
 CREATE INDEX create_ix
-  ON menu (created_time);
+  ON sim_menu (created_time);
 CREATE INDEX sort_ix
-  ON menu (sort);
+  ON sim_menu (sort);
 CREATE UNIQUE INDEX code_UNIQUE
-  ON menu (code);
+  ON sim_menu (code);
 
 -- ----------------------------
 --  Table structure for user_role
 -- ----------------------------
 DROP TABLE
-IF EXISTS user_role;
+IF EXISTS sim_user_role;
 
-CREATE TABLE user_role
+CREATE TABLE sim_user_role
 (
   username  VARCHAR(20) NOT NULL
   COMMENT '用户名',
@@ -133,9 +133,9 @@ CREATE TABLE user_role
 --  Table structure for role_menu
 -- ----------------------------
 DROP TABLE
-IF EXISTS role_menu;
+IF EXISTS sim_role_menu;
 
-CREATE TABLE role_menu
+CREATE TABLE sim_role_menu
 (
   role_code VARCHAR(32) NOT NULL
   COMMENT '角色代码',
@@ -149,9 +149,9 @@ CREATE TABLE role_menu
 --  Table structure for bank_channel
 -- ----------------------------
 DROP TABLE
-IF EXISTS bank_channel;
+IF EXISTS sim_bank_channel;
 
-CREATE TABLE bank_channel
+CREATE TABLE sim_bank_channel
 (
   id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -168,19 +168,19 @@ CREATE TABLE bank_channel
 )
   COMMENT '银行通道表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON bank_channel (id);
+  ON sim_bank_channel (id);
 CREATE INDEX create_ix
-  ON bank_channel (created_time);
+  ON sim_bank_channel (created_time);
 CREATE UNIQUE INDEX bnk_no_UNIQUE
-  ON bank_channel (bnk_co);
+  ON sim_bank_channel (bnk_co);
 
 -- ----------------------------
 --  Table structure for bank_resp
 -- ----------------------------
 DROP TABLE
-IF EXISTS bank_resp;
+IF EXISTS sim_bank_resp;
 
-CREATE TABLE bank_resp
+CREATE TABLE sim_bank_resp
 (
   id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -201,19 +201,19 @@ CREATE TABLE bank_resp
 )
   COMMENT '错误码表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON bank_resp (id);
+  ON sim_bank_resp (id);
 CREATE INDEX create_ix
-  ON bank_resp (created_time);
+  ON sim_bank_resp (created_time);
 CREATE UNIQUE INDEX bnk_resp_UNIQUE
-  ON bank_resp (bnk_co, resp_co);
+  ON sim_bank_resp (bnk_co, resp_co);
 
 -- ----------------------------
 --  Table structure for bank_tran
 -- ----------------------------
 DROP TABLE
-IF EXISTS bank_tran;
+IF EXISTS sim_bank_tran;
 
-CREATE TABLE bank_tran
+CREATE TABLE sim_bank_tran
 (
   id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -244,19 +244,19 @@ CREATE TABLE bank_tran
 )
   COMMENT '交易类型表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON bank_tran (id);
+  ON sim_bank_tran (id);
 CREATE INDEX create_ix
-  ON bank_tran (created_time);
+  ON sim_bank_tran (created_time);
 CREATE INDEX bnk_tran_UNIQUE
-  ON bank_tran (bnk_co, tran_co);
+  ON sim_bank_tran (bnk_co, tran_co);
 
 -- ----------------------------
 --  Table structure for bank_command
 -- ----------------------------
 DROP TABLE
-IF EXISTS bank_command;
+IF EXISTS sim_bank_command;
 
-CREATE TABLE bank_command
+CREATE TABLE sim_bank_command
 (
   id            BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -331,25 +331,25 @@ CREATE TABLE bank_command
 )
   COMMENT '交易流水表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON bank_command (id);
+  ON sim_bank_command (id);
 CREATE INDEX create_ix
-  ON bank_command (created_time);
+  ON sim_bank_command (created_time);
 CREATE UNIQUE INDEX mer_serial_no_UNIQUE
-  ON bank_command (mer_serial_no);
+  ON sim_bank_command (mer_serial_no);
 CREATE UNIQUE INDEX bnk_serial_no_UNIQUE
-  ON bank_command (bnk_serial_no);
+  ON sim_bank_command (bnk_serial_no);
 CREATE INDEX tran_co_ix
-  ON bank_command (tran_co);
+  ON sim_bank_command (tran_co);
 CREATE INDEX work_day_ix
-  ON bank_command (work_day);
+  ON sim_bank_command (work_day);
 
 -- ----------------------------
 --  Table structure for dz_file
 -- ----------------------------
 DROP TABLE
-IF EXISTS dz_file;
+IF EXISTS sim_dz_file;
 
-CREATE TABLE dz_file
+CREATE TABLE sim_dz_file
 (
   id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
@@ -374,9 +374,9 @@ CREATE TABLE dz_file
 )
   COMMENT '对账文件表';
 CREATE UNIQUE INDEX id_UNIQUE
-  ON dz_file (id);
+  ON sim_dz_file (id);
 CREATE INDEX create_ix
-  ON dz_file (created_time);
+  ON sim_dz_file (created_time);
 
 DROP TABLE
 IF EXISTS sim_order;
@@ -418,7 +418,7 @@ CREATE UNIQUE INDEX id_UNIQUE
 -- ----------------------------
 --  data for user
 -- ----------------------------
-INSERT INTO USER
+INSERT INTO sim_USER
 (username, PASSWORD, salt, fullname
 )
 VALUES
@@ -428,7 +428,7 @@ VALUES
 -- ----------------------------
 --  data for role
 -- ----------------------------
-INSERT INTO role
+INSERT INTO sim_role
 (code, name)
 VALUES
   ('ROLE_ADMIN', '管理员');
@@ -436,7 +436,7 @@ VALUES
 -- ----------------------------
 --  data for menu
 -- ----------------------------
-INSERT INTO menu
+INSERT INTO sim_menu
 (code, name, pcode, url, sort, icon)
 VALUES
   ('DASHBOARD', '工作台', '', 'index', 0, 'menu-icon fa fa-dashboard'),
@@ -467,17 +467,17 @@ VALUES
 -- ----------------------------
 --  data for user_role
 -- ----------------------------
-INSERT INTO user_role
+INSERT INTO sim_user_role
 VALUES
   ('admin', 'ROLE_ADMIN');
 
 -- ----------------------------
 --  data for role_menu
 -- ----------------------------
-INSERT INTO role_menu SELECT
+INSERT INTO sim_role_menu SELECT
                         'ROLE_ADMIN',
                         code
-                      FROM menu;
+                      FROM sim_menu;
 
 
 

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Data
-@Table(name = "bank_resp")
+@Table(name = "sim_bank_resp")
 public class BankResp implements Serializable {
     /**
      * 主键, 自增

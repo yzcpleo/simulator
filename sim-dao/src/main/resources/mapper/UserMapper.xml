@@ -19,7 +19,7 @@
     </resultMap>
 
     <insert id="insertUserRoles">
-        INSERT INTO user_role (username, role_code)
+        INSERT INTO sim_user_role (username, role_code)
         VALUES
         <foreach collection="roleCodes" item="roleCode" separator=",">
             (#{username}, #{roleCode})

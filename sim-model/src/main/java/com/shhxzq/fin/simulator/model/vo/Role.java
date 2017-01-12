@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Table(name = "role")
+@Table(name = "sim_role")
 public class Role implements Serializable {
 
     /**

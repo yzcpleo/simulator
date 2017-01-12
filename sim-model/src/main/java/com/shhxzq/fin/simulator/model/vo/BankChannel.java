@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Table(name = "bank_channel")
+@Table(name = "sim_bank_channel")
 public class BankChannel implements Serializable {
     /**
      * 主键, 自增

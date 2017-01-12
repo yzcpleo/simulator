@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Table(name = "dz_file")
+@Table(name = "sim_dz_file")
 @Data
 public class DzFile implements Serializable {
     /**

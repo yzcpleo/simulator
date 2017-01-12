@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Table(name = "menu")
+@Table(name = "sim_menu")
 public class Menu implements Serializable {
 
     /**

@@ -16,7 +16,7 @@
     </resultMap>
 
     <insert id="insertBankResps">
-        INSERT INTO bank_resp
+        INSERT INTO sim_bank_resp
         (bnk_co, bnk_nm, resp_co, resp_msg)
         VALUES
         <foreach collection="resps" item="resp" separator=",">

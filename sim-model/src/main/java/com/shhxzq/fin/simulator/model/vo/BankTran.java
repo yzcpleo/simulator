@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Table(name = "bank_tran")
+@Table(name = "sim_bank_tran")
 @Data
 public class BankTran implements Serializable {
     /**
