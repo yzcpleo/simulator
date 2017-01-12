@@ -19,7 +19,7 @@ public interface DzFileService {
      */
     List<DzFile> searchDzFiles(int pageNum, String bnkCo);
 
-    /**
+     /**
      * 生成对账文件
      *
      * @param bankTranId

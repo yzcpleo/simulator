@@ -62,9 +62,6 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
         BankTran bankTran = bankTranService.findBankTranById(bankTranId);
         log.info("开始生成对账文件,bankTran:{}", bankTran);
 
-        // 银行代码
-        String bnkCo = bankTran.getBnkCo();
-
         // 1. 查询交易
         List<BankCommand> bankCommands = bankCommandService.findBankCommands4Dz(bankTran.getTranCo(), bankTran.getBnkCo(), workDay);
         log.info("需要对账的交易数量:{}", bankCommands.size());
@@ -156,6 +153,7 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
                 out.newLine();
             }
 
+            // 处理文件尾
             if (!bankCommands.isEmpty()) {
                 String bnkCo = bankCommands.get(0).getBnkCo();
                 if (BankEnum.CMBCT0.getBnkCo().equals(bnkCo)) {
