@@ -378,15 +378,52 @@ CREATE UNIQUE INDEX id_UNIQUE
 CREATE INDEX create_ix
   ON dz_file (created_time);
 
+DROP TABLE
+IF EXISTS sim_order;
+
+CREATE TABLE sim_order (
+  id                BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `amount`          VARCHAR(16)                                                   DEFAULT NULL,
+  `bank_card_no`    VARCHAR(32)                                                   DEFAULT NULL,
+  `cert_no`         VARCHAR(20)                                                   DEFAULT NULL,
+  `cert_type`       VARCHAR(2)                                                    DEFAULT NULL,
+  `charge_type`     VARCHAR(1)                                                    DEFAULT NULL,
+  `cust_type`       VARCHAR(1)                                                    DEFAULT NULL,
+  `mobile`          VARCHAR(11)                                                   DEFAULT NULL,
+  `name`            VARCHAR(40)                                                   DEFAULT NULL,
+  `payment_type`    VARCHAR(1)                                                    DEFAULT NULL,
+  `prod_id`         VARCHAR(32)                                                   DEFAULT NULL,
+  `remark`          VARCHAR(256)                                                  DEFAULT NULL,
+  `risk_level`      VARCHAR(1)                                                    DEFAULT NULL,
+  `serial_no`       VARCHAR(32)                                                   DEFAULT NULL,
+  `share`           VARCHAR(16)                                                   DEFAULT NULL,
+  `apkind`          VARCHAR(3)                                                    DEFAULT NULL,
+  `trade_acct`      VARCHAR(32)                                                   DEFAULT NULL,
+  `order_type`      VARCHAR(1)                                                    DEFAULT NULL,
+  `company_no`      VARCHAR(4)                                                    DEFAULT NULL,
+  `sub_company_no`  VARCHAR(8)                                                    DEFAULT NULL,
+  `partner_cust_no` VARCHAR(20)                                                   DEFAULT NULL,
+  is_deleted        TINYINT                               NOT NULL                DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time      TIMESTAMP                             NOT NULL                DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time      TIMESTAMP                             NOT NULL                DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+);
+CREATE UNIQUE INDEX id_UNIQUE
+  ON sim_order (id);
+
 #====================初始数据====================#
 
 -- ----------------------------
 --  data for user
 -- ----------------------------
-INSERT INTO user
-(username, password, salt, fullname)
+INSERT INTO USER
+(username, PASSWORD, salt, fullname
+)
 VALUES
-  ('admin', '9606b0029ba4a8c9369f288cced0dc465eb5eabd', '3685072edcf8aad8', '管理员');
+  ('admin', '9606b0029ba4a8c9369f288cced0dc465eb5eabd', '3685072edcf8aad8', '管理员'
+  );
 
 -- ----------------------------
 --  data for role
@@ -421,7 +458,11 @@ VALUES
   ('BANK', '银行', 'DASHBOARD', 'bank', 4, 'menu-icon fa fa-credit-card'),
   ('BANK_CHANNEL', '银行通道', 'BANK', 'bank/channel', 0, ''),
   ('BANK_TRAN', '交易类型', 'BANK', 'bank/tran', 1, ''),
-  ('BANK_RESP', '错误码管理', 'BANK', 'bank/resp', 2, '');
+  ('BANK_RESP', '错误码管理', 'BANK', 'bank/resp', 2, ''),
+
+  ('HOP', '三方', 'DASHBOARD', 'hop', 5, 'menu-icon fa fa-globe'),
+  ('HOP_ORDER', '财付通', 'HOP', 'hop/order', 0, ''),
+  ('HOP_SONGGUO', '松果金融', 'HOP', 'hop/songguo', 1, '');
 
 -- ----------------------------
 --  data for user_role

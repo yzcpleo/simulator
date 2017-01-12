@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shhxzq.fin.simulator.mapper.SimOrderMapper">
+    <resultMap id="BaseResultMap" type="com.shhxzq.fin.simulator.model.vo.SimOrder">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="amount" property="amount" jdbcType="VARCHAR"/>
+        <result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR"/>
+        <result column="cert_no" property="certNo" jdbcType="VARCHAR"/>
+        <result column="cert_type" property="certType" jdbcType="VARCHAR"/>
+        <result column="charge_type" property="chargeType" jdbcType="VARCHAR"/>
+        <result column="cust_type" property="custType" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="payment_type" property="paymentType" jdbcType="VARCHAR"/>
+        <result column="prod_id" property="prodId" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="risk_level" property="riskLevel" jdbcType="VARCHAR"/>
+        <result column="serial_no" property="serialNo" jdbcType="VARCHAR"/>
+        <result column="share" property="share" jdbcType="VARCHAR"/>
+        <result column="apkind" property="apkind" jdbcType="VARCHAR"/>
+        <result column="trade_acct" property="tradeAcct" jdbcType="VARCHAR"/>
+        <result column="order_type" property="orderType" jdbcType="VARCHAR"/>
+        <result column="company_no" property="companyNo" jdbcType="VARCHAR"/>
+        <result column="sub_company_no" property="subCompanyNo" jdbcType="VARCHAR"/>
+        <result column="partner_cust_no" property="partnerCustNo" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+</mapper>

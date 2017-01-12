@@ -2,6 +2,7 @@ package com.shhxzq.fin.simulator.web.listener;
 
 import com.shhxzq.fin.simulator.biz.service.impl.ccb.socket.CCBProcesser;
 import com.shhxzq.fin.simulator.biz.service.impl.cmb.CMBProcesser;
+import com.shhxzq.fin.simulator.biz.service.impl.cmbct0.SocketThread;
 import com.shhxzq.fin.simulator.biz.service.impl.gdny.GDNYProcesser;
 import com.shhxzq.fin.simulator.biz.service.impl.pab.PABProcesser;
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +22,10 @@ import java.util.regex.Pattern;
  */
 @Log4j2
 public class ServerSocketListener implements ServletContextListener {
+
+    private static final int PORT = 9108;
+
+    private ServerSocket serverSocket;
 
     private BufferedWriter writer;
 
@@ -49,40 +54,80 @@ public class ServerSocketListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        new Thread() {
-            @Override
-            public void run() {
-                start();
+        start();
+
+        startCMBCT0();
+    }
+
+    private void startCMBCT0() {
+        log.info("开始启动民生T+0服务...");
+        try {
+            serverSocket = new ServerSocket(PORT);
+
+            new Thread() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            log.info("民生T+0垫资服务在" + PORT + "端口监听...");
+                            Socket socket = serverSocket.accept();
+                            new SocketThread(socket).start();
+                        } catch (Exception e) {
+                            log.error("socket连接民生T+0异常", e);
+                        }
+                    }
+                }
+            }.start();
+        } catch (Exception e) {
+            log.error("民生T+0服务启动异常", e);
+            close();
+        }
+        log.info("启动民生T+0服务完毕...");
+    }
+
+    private void close() {
+        log.info("民生T+0服务关闭");
+        try {
+            SocketThread.setCanRun(false);
+            if (serverSocket != null) {
+                serverSocket.close();
             }
-        }.start();
+        } catch (Exception e) {
+            log.error(e);
+        }
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-
+        close();
     }
 
     public void start() {
-        ServerSocket serverSocket = null;
-        Socket socket = null;
-        try {
-            serverSocket = new ServerSocket(7081);
+        new Thread(){
+            @Override
+            public void run() {
+                ServerSocket serverSocket = null;
+                Socket socket = null;
+                try {
+                    serverSocket = new ServerSocket(7081);
 
-            while (true) {
-                socket = serverSocket.accept();
-                log.info(socket.hashCode() + " connected...");
-                connectManager(socket);
+                    while (true) {
+                        socket = serverSocket.accept();
+                        log.info(socket.hashCode() + " connected...");
+                        connectManager(socket);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        serverSocket.close();
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                serverSocket.close();
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        }.start();
     }
 
 
