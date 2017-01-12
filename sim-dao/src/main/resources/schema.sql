@@ -418,7 +418,7 @@ CREATE UNIQUE INDEX id_UNIQUE
 -- ----------------------------
 --  data for user
 -- ----------------------------
-INSERT INTO sim_USER
+INSERT INTO sim_user
 (username, PASSWORD, salt, fullname
 )
 VALUES
