@@ -8,7 +8,6 @@ import java.math.BigDecimal;
  * <p>Description:</p>
  * <p>Copyright: Copyright (c) 2009</p>
  *
- * @todo:
  */
 
 public class Common {
