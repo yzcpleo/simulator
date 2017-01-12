@@ -42,6 +42,48 @@ public class StringUtil {
     }
 
     /**
+     * <pre>
+     * StringUtil.isEmpty(null) = true
+     * StringUtil.isEmpty("") = true
+     * StringUtil.isEmpty("    ") = true
+     * StringUtil.isEmpty("abc") = false
+     * </pre>
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isEmpty(String str) {
+        return str == null || str.trim().length() == 0;
+    }
+
+    /**
+     * <pre>
+     * StringUtil.capitalize(null)  = null
+     * StringUtil.capitalize("")    = ""
+     * StringUtil.capitalize("cat") = "Cat"
+     * StringUtil.capitalize("cAt") = "CAt"
+     * </pre>
+     *
+     * @param str
+     * @return
+     */
+    public static String capitalize(String str) {
+        if (isEmpty(str)) {
+            return str;
+        }
+
+        char firstChar = str.charAt(0);
+        if (Character.isTitleCase(firstChar)) {
+            return str;
+        }
+
+        return new StringBuilder(str.length())
+                .append(Character.toTitleCase(firstChar))
+                .append(str.substring(1))
+                .toString();
+    }
+
+    /**
      * 首字母变大写
      *
      * @param str
@@ -68,6 +110,22 @@ public class StringUtil {
             str = "";
         }
         return String.format("%%%s%%", str);
+    }
+
+    /**
+     * 判断str是否在arr中
+     *
+     * @param str
+     * @param arr
+     * @return
+     */
+    public static boolean in(String str, String... arr) {
+        for (String s : arr) {
+            if (s.equals(str)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

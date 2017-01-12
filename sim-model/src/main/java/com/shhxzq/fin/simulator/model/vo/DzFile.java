@@ -47,6 +47,12 @@ public class DzFile implements Serializable {
     private String filePath;
 
     /**
+     * 是否推送对账文件:{0:不推送, 1:推送}
+     */
+    @Column(name = "is_push_dz")
+    private Byte isPushDz;
+
+    /**
      * 逻辑删除:{0:未删除, 1:已删除}
      */
     @Column(name = "is_deleted")

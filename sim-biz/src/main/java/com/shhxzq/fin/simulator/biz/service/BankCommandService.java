@@ -1,6 +1,7 @@
 package com.shhxzq.fin.simulator.biz.service;
 
 import com.shhxzq.fin.simulator.model.vo.BankCommand;
+import com.shhxzq.fin.simulator.model.vo.BankTran;
 
 import java.util.List;
 
@@ -54,4 +55,14 @@ public interface BankCommandService {
      * @param command
      */
     void saveBankCommand(BankCommand command);
+
+    /**
+     * 查询交易4对账
+     *
+     * @param tranCo
+     * @param bnkCo
+     * @param workDay
+     * @return
+     */
+    List<BankCommand> findBankCommands4Dz(String tranCo, String bnkCo, String workDay);
 }

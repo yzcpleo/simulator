@@ -2,21 +2,22 @@ package com.shhxzq.fin.simulator.web.controller.dashboard;
 
 import com.github.pagehelper.PageInfo;
 import com.shhxzq.fin.simulator.biz.service.BankChannelService;
+import com.shhxzq.fin.simulator.biz.service.BankTranService;
 import com.shhxzq.fin.simulator.biz.service.DzFileService;
 import com.shhxzq.fin.simulator.model.vo.BankChannel;
-import com.shhxzq.fin.simulator.model.vo.BankCommand;
+import com.shhxzq.fin.simulator.model.vo.BankTran;
 import com.shhxzq.fin.simulator.model.vo.DzFile;
 import com.shhxzq.fin.simulator.model.vo.User;
 import com.shhxzq.fin.simulator.web.controller.BaseController;
+import lombok.extern.log4j.Log4j2;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author kangyonggan
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("dashboard/data/dz")
+@Log4j2
 public class DashboardDataDzController extends BaseController {
 
     @Autowired
@@ -31,6 +33,9 @@ public class DashboardDataDzController extends BaseController {
 
     @Autowired
     private BankChannelService bankChannelService;
+
+    @Autowired
+    private BankTranService bankTranService;
 
     /**
      * 对账文件界面
@@ -52,6 +57,53 @@ public class DashboardDataDzController extends BaseController {
         model.addAttribute("page", page);
         model.addAttribute("bankChannels", bankChannels);
         return getPathList();
+    }
+
+    /**
+     * 手动生成对账文件
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "gen", method = RequestMethod.GET)
+    public String gen(Model model) {
+        List<BankTran> bankTrans = bankTranService.findbankTran4Gen();
+
+        model.addAttribute("bankTrans", bankTrans);
+        return getPathRoot() + "/gen-modal";
+    }
+
+    /**
+     * 手动生成对账文件提交
+     *
+     * @param id
+     * @param workDay
+     * @return
+     */
+    @RequestMapping(value = "gen", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> gen(@RequestParam("id") Long id, @RequestParam("workDay") String workDay) {
+        dzFileService.saveDzFile(id, workDay);
+        return getResultMap();
+    }
+
+    /**
+     * 手动推送
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}/push", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> push(@PathVariable("id") Long id) {
+        Map<String, Object> resultMap = getResultMap();
+        try {
+            dzFileService.pushDzFile(id);
+        } catch (Exception e) {
+            log.error("对账文件推送失败", e);
+            setResultMapFailure(resultMap, "对账文件推送失败，请联系管理员!");
+        }
+        return resultMap;
     }
 
 }

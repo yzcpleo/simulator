@@ -7,6 +7,7 @@ import com.shhxzq.fin.simulator.mapper.BankCommandMapper;
 import com.shhxzq.fin.simulator.model.constants.AppConstants;
 import com.shhxzq.fin.simulator.model.constants.TranSt;
 import com.shhxzq.fin.simulator.model.vo.BankCommand;
+import com.shhxzq.fin.simulator.model.vo.BankTran;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,5 +75,15 @@ public class BankCommandServiceImpl extends BaseService<BankCommand> implements 
     @Override
     public void saveBankCommand(BankCommand bankCommand) {
         super.save(bankCommand);
+    }
+
+    @Override
+    public List<BankCommand> findBankCommands4Dz(String tranCo, String bnkCo, String workDay) {
+        BankCommand bankCommand = new BankCommand();
+        bankCommand.setBnkCo(bnkCo);
+        bankCommand.setTranCo(tranCo);
+        bankCommand.setWorkDay(workDay);
+
+        return super.select(bankCommand);
     }
 }

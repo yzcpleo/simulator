@@ -77,4 +77,12 @@ public class BankTranServiceImpl extends BaseService<BankTran> implements BankTr
 
         return super.selectOne(bankTran);
     }
+
+    @Override
+    public List<BankTran> findbankTran4Gen() {
+        BankTran bankTran = new BankTran();
+        bankTran.setIsGenDz((byte) 1);
+
+        return super.select(bankTran);
+    }
 }

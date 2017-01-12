@@ -363,6 +363,8 @@ CREATE TABLE dz_file
   COMMENT '交易名称',
   file_path    VARCHAR(256)                          NOT NULL                DEFAULT ''
   COMMENT '对账文件路径',
+  is_push_dz   TINYINT                               NOT NULL                DEFAULT 0
+  COMMENT '是否推送对账文件:{0:不推送, 1:推送}',
   is_deleted   TINYINT                               NOT NULL                DEFAULT 0
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
   created_time TIMESTAMP                             NOT NULL                DEFAULT CURRENT_TIMESTAMP

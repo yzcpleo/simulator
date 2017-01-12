@@ -18,4 +18,21 @@ public interface DzFileService {
      * @return
      */
     List<DzFile> searchDzFiles(int pageNum, String bnkCo);
+
+    /**
+     * 生成对账文件
+     *
+     * @param bankTranId
+     * @param workDay
+     * @return
+     */
+    String saveDzFile(Long bankTranId, String workDay);
+
+    /**
+     * 推送对账文件
+     *
+     * @param id
+     * @throws Exception
+     */
+    void pushDzFile(Long id) throws Exception;
 }

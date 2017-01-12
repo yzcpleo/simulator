@@ -58,4 +58,7 @@ public interface BankTranService {
      * @return
      */
     BankTran findBankTranByBnkCoAndTranCo(String bnkCo, String tranCo);
+
+    List<BankTran> findbankTran4Gen();
+
 }

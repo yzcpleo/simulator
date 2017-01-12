@@ -11,6 +11,7 @@
         <result column="tran_co" property="tranCo" jdbcType="VARCHAR"/>
         <result column="tran_nm" property="tranNm" jdbcType="VARCHAR"/>
         <result column="file_path" property="filePath" jdbcType="VARCHAR"/>
+        <result column="is_push_dz" property="isPushDz" jdbcType="TINYINT"/>
         <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
