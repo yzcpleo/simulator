@@ -88,6 +88,7 @@
         <commons-net.version>3.5</commons-net.version>
         <poi.version>3.12</poi.version>
         <dom4j.version>1.6.1</dom4j.version>
+        <xstream.version>1.4.2</xstream.version>
     </properties>
 
     <build>
@@ -471,6 +472,11 @@
                 <groupId>dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>${dom4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>${xstream.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
