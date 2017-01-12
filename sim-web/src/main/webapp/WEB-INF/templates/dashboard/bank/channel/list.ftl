@@ -5,7 +5,7 @@
     <h1>
         银行通道列表
         <small class="pull-right">
-            <a href="${ctx}/dashboard/bank/cahnnel/create" class="btn btn-sm btn-inverse" data-toggle="modal"
+            <a href="${ctx}/dashboard/bank/channel/create" class="btn btn-sm btn-inverse" data-toggle="modal"
                data-target="#myModal"
                data-backdrop="static">添加</a>
         </small>
