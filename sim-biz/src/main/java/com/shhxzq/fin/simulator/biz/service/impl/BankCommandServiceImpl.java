@@ -7,7 +7,6 @@ import com.shhxzq.fin.simulator.mapper.BankCommandMapper;
 import com.shhxzq.fin.simulator.model.constants.AppConstants;
 import com.shhxzq.fin.simulator.model.constants.TranSt;
 import com.shhxzq.fin.simulator.model.vo.BankCommand;
-import com.shhxzq.fin.simulator.model.vo.BankTran;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,5 +84,19 @@ public class BankCommandServiceImpl extends BaseService<BankCommand> implements 
         bankCommand.setWorkDay(workDay);
 
         return super.select(bankCommand);
+    }
+
+    @Override
+    public List<BankCommand> findBankCommands4DzByPage(String bnkCo, String tranCo, String start, String end) {
+        Example example = new Example(BankCommand.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("bnkCo", bnkCo);
+        criteria.andEqualTo("tranCo", tranCo);
+
+        criteria.andGreaterThanOrEqualTo("beSer", start);
+        criteria.andLessThanOrEqualTo("beSer", end);
+        example.setOrderByClause("id desc");
+
+        return super.selectByExample(example);
     }
 }

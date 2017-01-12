@@ -15,6 +15,7 @@ public enum BankEnum implements Serializable {
     CP("cp", "中国银联"),
     ECT("ect", "上海证通"),
     GDNY("gndy", "广东南粤"),
+    SPDB("spdb", "上海浦发"),
     CMBCT0("cmbct0", "民生T+0"),
     SH2("sh2", "上海快捷"),
     SH3("sh3", "上海银企");

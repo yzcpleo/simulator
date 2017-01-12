@@ -65,4 +65,15 @@ public interface BankCommandService {
      * @return
      */
     List<BankCommand> findBankCommands4Dz(String tranCo, String bnkCo, String workDay);
+
+    /**
+     * 分页查询交易4对账
+     *
+     * @param bnkCo
+     * @param tranCo
+     * @param start
+     * @param end
+     * @return
+     */
+    List<BankCommand> findBankCommands4DzByPage(String bnkCo, String tranCo, String start, String end);
 }
