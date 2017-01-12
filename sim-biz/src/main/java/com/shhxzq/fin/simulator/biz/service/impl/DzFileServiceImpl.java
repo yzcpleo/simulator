@@ -60,6 +60,8 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
 
     @Override
     public String saveDzFile(Long bankTranId, String workDay) {
+        workDay = workDay.replaceAll("-", "");
+
         BankTran bankTran = bankTranService.findBankTranById(bankTranId);
         log.info("开始生成对账文件,bankTran:{}", bankTran);
 
@@ -111,7 +113,7 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
     @Override
     public void saveDzFiles(String workDay) {
         List<BankTran> bankTrans = bankTranService.findbankTran4Gen();
-        log.info("共有{}种交易类型需要生成对账文件");
+        log.info("共有{}种交易类型需要生成对账文件", bankTrans.size());
 
         for (BankTran bankTran : bankTrans) {
             saveDzFile(bankTran.getId(), workDay);
@@ -248,13 +250,13 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
                 val = field;
             }
             if (BankEnum.ECT.equals(bnkCo)) {
-                if ("transType".equals(field)) {
+                if ("tranCo".equals(field)) {
                     if ("pay".equals(val)) {
                         val = "102";
                     } else if ("redeem".equals(val)) {
                         val = "101";
                     }
-                } else if ("respCode".equals(field)) {
+                } else if ("respCo".equals(field)) {
                     if ("50050000".equals(val)) {
                         val = "00";
                     } else if ("50050001".equals(val)) {
@@ -264,7 +266,7 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
                     }
                 }
             } else if (BankEnum.CP.getBnkCo().equals(bnkCo)) {
-                if ("transStat".equals(field)) {
+                if ("tranCo".equals(field)) {
                     if (tranCo.equals("redeem")) {
                         String respCo = bankCommand.getRespCo();
                         if (StringUtil.in(respCo, "0100", "0101", "0102", "0103", "0104")) {
@@ -275,22 +277,22 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
                     }
                 }
             } else if (BankEnum.GDNY.getBnkCo().equals(bnkCo)) {
-                if ("transType".equals(field)) {
+                if ("tranCo".equals(field)) {
                     if ("pay".equals(val)) {
                         val = "1";
                     } else if ("redeem".equals(val)) {
                         val = "4";
                     }
-                } else if ("stat".equals(field)) {
+                } else if ("tranSt".equals(field)) {
                     if ("Y".equals(val)) {
                         val = "S";
                     }
                 }
 
             } else if (BankEnum.CMBCT0.getBnkCo().equals(bnkCo)) {
-                if ("transType".equals(field)) {
+                if ("tranCo".equals(field)) {
                     val = "1002";
-                } else if ("stat".equals(field)) {
+                } else if ("tranSt".equals(field)) {
                     if ("Y".equals(val)) {
                         val = "S";
                     } else {
@@ -302,6 +304,8 @@ public class DzFileServiceImpl extends BaseService<DzFile> implements DzFileServ
 
             values[i++] = val;
         }
+
+        log.info("对账文件行：values:{}", values);
 
         return String.format(template, values);
     }

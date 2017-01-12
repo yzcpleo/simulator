@@ -2,6 +2,7 @@ package com.shhxzq.fin.simulator.biz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.shhxzq.fin.simulator.biz.service.BankCommandService;
+import com.shhxzq.fin.simulator.common.util.DateUtils;
 import com.shhxzq.fin.simulator.common.util.StringUtil;
 import com.shhxzq.fin.simulator.mapper.BankCommandMapper;
 import com.shhxzq.fin.simulator.model.constants.AppConstants;
@@ -73,7 +74,17 @@ public class BankCommandServiceImpl extends BaseService<BankCommand> implements 
 
     @Override
     public void saveBankCommand(BankCommand bankCommand) {
-        super.save(bankCommand);
+        if (StringUtils.isEmpty(bankCommand.getBnkNm())) {
+            bankCommand.setBnkNm("");
+        }
+        if (StringUtils.isEmpty(bankCommand.getTranNm())) {
+            bankCommand.setTranNm("");
+        }
+        if (StringUtils.isEmpty(bankCommand.getRespMsg())) {
+            bankCommand.setRespMsg("");
+        }
+
+        super.insertSelective(bankCommand);
     }
 
     @Override

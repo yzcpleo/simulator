@@ -80,10 +80,11 @@ public class CMBCT0Service {
             command.setBnkNm(bankTran.getBnkNm());
             command.setRcvrAccoNo(tranAcco);// 交易账户(卡号)
             command.setTranCo(bankTran.getTranCo());// 交易类型
+            command.setTranNm(bankTran.getTranNm());
             command.setAmount(tranAmt);// 交易金额
             command.setRespCo(code);// 响应码: e.g. "00"
             command.setRespMsg("");
-            command.setTranCo(tranStatus);// 状态码: e.g. "Y"
+            command.setTranSt(tranStatus);// 状态码: e.g. "Y"
             command.setWorkDay(workDay);// 状态码: e.g. "Y"
             log.info("交易内容为: {}", command);
 

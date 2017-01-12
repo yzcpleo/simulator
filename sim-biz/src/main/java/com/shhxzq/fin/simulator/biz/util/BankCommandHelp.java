@@ -6,6 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author kangyonggan
  * @since 2017/1/11
@@ -24,7 +27,8 @@ public class BankCommandHelp {
      * @return
      */
     public static String genSerialNo() {
-        String nextVal = String.valueOf(redisService.incr(KEY_SERIAL_NO));
+//        String nextVal = String.valueOf(redisService.incr(KEY_SERIAL_NO));
+        String nextVal = new SimpleDateFormat("mmssSSS").format(new Date());
         return DateUtils.getCurrentDate() + StringUtils.leftPad(nextVal, 8, "0");
     }
 }
